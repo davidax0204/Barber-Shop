@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from 'src/services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    // private accountService: AccountService,
+    private accountService: AccountService,
     private toastr: ToastrService
   ) {
     this.signInForm = this.fb.group({
@@ -53,9 +54,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitSignInForm() {
-    // this.accountService.login(this.signInForm.value).subscribe(() => {
-    //   this.router.navigateByUrl('/profile');
-    //   this.toastr.success('Successfully logged in');
-    // });
+    this.accountService.login(this.signInForm.value).subscribe(() => {
+      this.router.navigateByUrl('/profile');
+      this.toastr.success('Successfully logged in');
+    });
   }
 }

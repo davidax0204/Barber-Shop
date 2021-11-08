@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from 'src/services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    // private accountService: AccountService,
+    private accountService: AccountService,
     private toaster: ToastrService
   ) {
     this.signUpForm = this.formBuilder.group(
@@ -113,11 +114,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmitSignUpForm() {
-    // this.accountService.register(this.signUpForm.value).subscribe(() => {
-    //   this.toaster.success(
-    //     `${this.userName.value} was successfully registered`
-    //   );
-    //   this.signUpForm.reset();
-    // });
+    this.accountService.register(this.signUpForm.value).subscribe(() => {
+      this.toaster.success(
+        `${this.userName.value} was successfully registered`
+      );
+      this.signUpForm.reset();
+    });
   }
 }

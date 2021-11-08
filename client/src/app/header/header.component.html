@@ -61,43 +61,45 @@
 
   <div class="header-user-button">
 
-    <a>
+    <!-- <a>
       <button routerLink="/register"
               class="header-user-button-inner"
               style="width: inherit;">
         Trainer Registration
       </button>
-    </a>
-    <a>
+    </a> -->
+    <!-- <a>
       <button routerLink="/heroes"
               class="header-user-button-inner"
               style="width: inherit;">
         My Heroes
       </button>
-    </a>
-    <a>
-      <button routerLink="/hero"
+    </a> -->
+    <a *ngIf="!(accountService.currentUser$ | async)">
+      <button routerLink="/register"
               class="header-user-button-inner"
               style="width: inherit;">
-        Hero Creation
+        Register
       </button>
     </a>
 
-    <a>
+    <a *ngIf="!(accountService.currentUser$ | async)">
       <button routerLink="/login"
               class="header-user-button-inner">
         <i class="user-button fa fa-user fa-lg"></i>
       </button>
     </a>
-    <a>
+
+    <a *ngIf="(accountService.currentUser$ | async)">
       <button routerLink="/profile"
               class="header-user-button-inner">
         <i class="user-button fa fa-user fa-lg"></i>
       </button>
     </a>
 
-    <a>
-      <button class="header-user-button-inner">
+    <a *ngIf="(accountService.currentUser$ | async)">
+      <button (click)="logout()"
+              class="header-user-button-inner">
         <i id="user"
            class="user-button fas fa-sign-out-alt fa-lg"></i>
       </button>
