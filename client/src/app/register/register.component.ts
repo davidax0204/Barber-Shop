@@ -6,6 +6,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/services/account.service';
 
@@ -24,7 +25,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private router: Router
   ) {
     this.signUpForm = this.formBuilder.group(
       {
@@ -119,6 +121,7 @@ export class RegisterComponent implements OnInit {
         `${this.userName.value} was successfully registered`
       );
       this.signUpForm.reset();
+      this.router.navigateByUrl('/profile');
     });
   }
 }

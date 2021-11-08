@@ -42,9 +42,9 @@ namespace API.Controllers
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            // var roleResult = await _userManager.AddToRoleAsync(user, "Trainer");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Client");
 
-            // if (!roleResult.Succeeded) return BadRequest(result.Errors);
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             var userDto = new UserDto
             {
@@ -81,7 +81,7 @@ namespace API.Controllers
             };
         }
 
-        [Authorize]
+        [Authorize(Policy = "RequireClientRole")]
         [HttpPut("{update}")]
         public async Task<ActionResult> UpdateUser(UpdateDto userUpdateDto)
         {

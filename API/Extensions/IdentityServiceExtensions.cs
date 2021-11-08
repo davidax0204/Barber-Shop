@@ -18,10 +18,10 @@ namespace API.Extensions
             {
                 opt.Password.RequireNonAlphanumeric = false;
             })
-                // .AddRoles<AppRole>()
-                // .AddRoleManager<RoleManager<AppRole>>()
+                .AddRoles<AppRole>()
+                .AddRoleManager<RoleManager<AppRole>>()
                 .AddSignInManager<SignInManager<AppUser>>()
-                // .AddRoleValidator<RoleValidator<AppRole>>()
+                .AddRoleValidator<RoleValidator<AppRole>>()
                 .AddEntityFrameworkStores<DataContext>();
 
 
@@ -31,19 +31,19 @@ namespace API.Extensions
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = "barbershop",
+                        ValidAudience = "barbershop2",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
                     };
                 });
 
 
-            // services.AddAuthorization(opt =>
-            // {
-            //     opt.AddPolicy("RequireTrainerRole", policy => policy.RequireRole("Trainer"));
-            // });
-
-            // services.AddSingleton<ILoggerService, LoggerService>();
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("RequireClientRole", policy => policy.RequireRole("Client"));
+            });
 
             return services;
         }
