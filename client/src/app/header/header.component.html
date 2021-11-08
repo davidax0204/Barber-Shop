@@ -1,0 +1,107 @@
+<div class="navigation-bar">
+  <div class="mobile-menu">
+
+
+    <div class="dropdown">
+      <div class="dropbtn">
+        <button class="main-menu">
+          <div class="menu-line"
+               id="menu-line-top"></div>
+          <div class="menu-line"
+               id="menu-line-middle"></div>
+          <div class="menu-line"
+               id="menu-line-bottom"></div>
+        </button>
+      </div>
+
+      <div class="dropdown-content">
+        <div>
+          <a routerLink="/register"> Trainer Registration </a>
+        </div>
+        <div>
+          <a routerLink="/heroes"> My Heroes </a>
+        </div>
+        <div>
+          <a routerLink="/hero"> Hero Creation </a>
+        </div>
+        <div>
+          <a routerLink="/login"> Login </a>
+        </div>
+        <div>
+          <a routerLink="/profile"> Profile </a>
+        </div>
+        <div>
+          <a routerLink="/profile"> Logout </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="logo-container">
+    <a routerLink="/heroes">
+      <img class="header-logo"
+           src="../../assets/img/Logo.png">
+    </a>
+  </div>
+
+
+  <form style="visibility: hidden"
+        method="POST"
+        action="/sort"
+        class="search-container">
+    <input type="text"
+           name="sort"
+           placeholder="Search for a course">
+    <button type="submit"
+            class="search-button"><i class="fa fa-search fa-lg"></i></button>
+  </form>
+
+
+  <div class="header-user-button">
+
+    <a>
+      <button routerLink="/register"
+              class="header-user-button-inner"
+              style="width: inherit;">
+        Trainer Registration
+      </button>
+    </a>
+    <a>
+      <button routerLink="/heroes"
+              class="header-user-button-inner"
+              style="width: inherit;">
+        My Heroes
+      </button>
+    </a>
+    <a>
+      <button routerLink="/hero"
+              class="header-user-button-inner"
+              style="width: inherit;">
+        Hero Creation
+      </button>
+    </a>
+
+    <a>
+      <button routerLink="/login"
+              class="header-user-button-inner">
+        <i class="user-button fa fa-user fa-lg"></i>
+      </button>
+    </a>
+    <a>
+      <button routerLink="/profile"
+              class="header-user-button-inner">
+        <i class="user-button fa fa-user fa-lg"></i>
+      </button>
+    </a>
+
+    <a>
+      <button class="header-user-button-inner">
+        <i id="user"
+           class="user-button fas fa-sign-out-alt fa-lg"></i>
+      </button>
+    </a>
+
+  </div>
+</div>

@@ -12,12 +12,15 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2019", "es2018", "dom"],
+    "strict": false,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": false
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictTemplates": false,
+    "fullTemplateTypeCheck": false,
+    "strictNullChecks": false
   }
 }

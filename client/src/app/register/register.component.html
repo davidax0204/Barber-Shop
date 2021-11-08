@@ -1,0 +1,77 @@
+<div class="main-content-inner-part">
+  <form id="sign-up-form"
+        [formGroup]="signUpForm"
+        (ngSubmit)="onSubmitSignUpForm()">
+    <div class="container">
+
+      <h1>Trainer Registration</h1>
+
+      <p>Please fill this form to create a new trainer</p>
+
+      <div style="color: black;"
+           *ngIf="signUpForm.dirty">
+        <strong>Information: </strong> You have made changes. Any unsaved changes will be lost
+      </div>
+
+      <hr>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Name</b></label>
+        <input type="text"
+               placeholder="Enter first name"
+               formControlName="userName">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="userName.touched && userName.invalid">{{invalidFirstNameMessage()}}</div>
+
+
+      <div class="sign-up-line-wrap">
+        <label><b>Email</b></label>
+        <input type="text"
+               placeholder="Enter email"
+               formControlName="email">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="email.touched && email.invalid">{{invalidEmailMessage()}}</div>
+
+
+      <div class="sign-up-line-wrap">
+        <label for="password"><b>Password</b></label>
+        <input type="password"
+               placeholder="Enter password"
+               formControlName="password">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="password.touched && password.invalid">{{invalidPasswordMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Reapet on Password</b></label>
+        <input type="password"
+               placeholder="Reapet on password"
+               formControlName="passwordRepeated">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="passwordRepeated.touched && (passwordRepeated.invalid || signUpForm.errors?.passwordnotrepeated)">
+        {{invalidPsswordRepeatedMessage()}}
+      </div>
+
+      <hr>
+
+      <p>By creating an account you agree to our Terms & Privacy.</p>
+
+      <button type="submit"
+              class="registerbtn"
+              [disabled]="signUpForm.invalid">Register</button>
+    </div>
+
+    <div class="container signin">
+      <p>Already have an account? <a routerLink="/login">Sign in</a>.</p>
+    </div>
+
+
+  </form>
+</div>
