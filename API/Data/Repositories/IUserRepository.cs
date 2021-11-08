@@ -6,10 +6,11 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using API.Controllers;
 
 namespace API.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseApiController, IUserRepository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -51,6 +52,7 @@ namespace API.Data.Repositories
         {
             _context.Entry(user).State = EntityState.Modified;
         }
+
 
         public async Task<bool> UserExists(string email)
         {

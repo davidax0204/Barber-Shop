@@ -34,7 +34,10 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (await _userRepository.UserExists(registerDto.Email)) { return BadRequest("The Email is already in use"); }
+            if (await _userRepository.UserExists(registerDto.Email))
+            {
+                return BadRequest("The Email is already in use");
+            }
 
             var user = _mapper.Map<AppUser>(registerDto);
 
@@ -101,6 +104,7 @@ namespace API.Controllers
                     return BadRequest("Email is taken");
                 }
             }
+
             if (userUpdateDto.Password != "" && userUpdateDto.Password != null)
             {
                 var result = await _userManager.ChangePasswordAsync(user, userUpdateDto.CurrentPassword, userUpdateDto.Password);
