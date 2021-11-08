@@ -91,6 +91,14 @@
     </a>
 
     <a *ngIf="(accountService.currentUser$ | async)">
+      <button routerLink="/book"
+              class="header-user-button-inner"
+              style="width: inherit;">
+        Book an appointment
+      </button>
+    </a>
+
+    <a *ngIf="(accountService.currentUser$ | async)">
       <button routerLink="/profile"
               class="header-user-button-inner">
         <i class="user-button fa fa-user fa-lg"></i>

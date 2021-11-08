@@ -13,6 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { ErrorInterceptor } from 'src/Interceptors/error.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { JwtInterceptor } from 'src/Interceptors/jwt.interceptor';
+import { BookComponent } from './book/book.component';
+// import { DateFnsModule } from 'ngx-date-fns';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { JwtInterceptor } from 'src/Interceptors/jwt.interceptor';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
+    BookComponent,
   ],
   imports: [
     BrowserModule,

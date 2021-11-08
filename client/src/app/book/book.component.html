@@ -1,0 +1,47 @@
+<div class="main-content-inner-part">
+  <form id="sign-up-form"
+        [formGroup]="bookAppointmentForm"
+        (ngSubmit)="onSubmitbookAppointmentForm()">
+    <div class="container">
+
+      <h1>Book an appointment</h1>
+
+      <hr>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Date</b></label>
+        <input type="date"
+               placeholder="Enter email"
+               (change)="handler($event);"
+               formControlName="date">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="date.touched && date.invalid">{{invalidDateMessage()}}</div>
+
+
+      <ng-container *ngIf="showTime">
+        <div class="sign-up-line-wrap">
+          <label for="password"><b>Select a time</b></label>
+          <select multiple
+                  formControlName="time">
+            <option *ngFor="let hour of hours"
+                    [ngValue]="hour">{{hour |date:"HH:mm"}}
+            </option>
+          </select>
+        </div>
+
+        <div class="invalid-message"
+             *ngIf="time.touched && time.invalid">{{invalidTime()}}</div>
+      </ng-container>
+
+
+      <hr>
+
+      <button type="submit"
+              class="registerbtn"
+              [disabled]="bookAppointmentForm.invalid">Book</button>
+
+    </div>
+  </form>
+</div>
