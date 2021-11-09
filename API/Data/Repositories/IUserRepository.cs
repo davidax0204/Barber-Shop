@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using API.Controllers;
+using System.Security.Claims;
 
 namespace API.Data.Repositories
 {
@@ -23,6 +24,14 @@ namespace API.Data.Repositories
             _userManager = userManager;
         }
 
+        // public Task<AppUser> GetActiveUser()
+        // {
+        //     var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        //     var user = this.GetUserByIdAsync(userId);
+
+        //     return user;
+        // }
+
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
             return await _userManager.Users
@@ -33,7 +42,7 @@ namespace API.Data.Repositories
         {
             return await _context.Users
                     .Where(x => x.Id == id)
-                    // .Include(h => h.Heroes)
+                    .Include(a => a.Appointments)
                     .SingleOrDefaultAsync();
         }
 

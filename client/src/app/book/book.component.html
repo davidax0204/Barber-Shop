@@ -26,7 +26,7 @@
           <select multiple
                   formControlName="time">
             <option *ngFor="let hour of hours"
-                    [ngValue]="hour">{{hour |date:"HH:mm"}}
+                    [ngValue]="hour">{{hour | date:"HH:mm"}}
             </option>
           </select>
         </div>
@@ -44,4 +44,20 @@
 
     </div>
   </form>
+</div>
+
+<div id="myModal"
+     *ngIf="isModalOpen"
+     class="modal">
+  <div class="modal-content">
+    <span (click)="onClickCloseModal()"
+          class="close">&times;</span>
+    <div>
+      <h3>Please confirm the appointment details:</h3>
+      {{date.value}} at {{time.value | date:"HH:mm"}}
+      <button type="submit"
+              class="registerbtn"
+              (click)="confirm()">Confirm</button>
+    </div>
+  </div>
 </div>

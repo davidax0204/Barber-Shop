@@ -9,6 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/services/account.service';
+import { BarberService } from 'src/services/barber.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-book',
@@ -27,12 +29,14 @@ export class BookComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private accountService: AccountService,
+    private barberService: BarberService,
     private toastr: ToastrService
   ) {
     this.bookAppointmentForm = this.fb.group({
-      date: ['', [Validators.required, this.weekendValidator]],
+      date: [
+        '',
+        [Validators.required, this.weekendValidator, this.pastDateValidator],
+      ],
       time: ['', [Validators.required]],
     });
 
@@ -77,6 +81,9 @@ export class BookComponent implements OnInit {
     if (this.date.errors?.weekend) {
       return 'The barber shop is closed on the weekend';
     }
+    if (this.date.errors?.invalidPastDate) {
+      return 'Please select a valid date';
+    }
   }
 
   invalidTime() {
@@ -89,35 +96,33 @@ export class BookComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  // weekendValidator(control: FormGroup): ValidationErrors | null {
-  //   debugger;
-  //   const selectedDate = control.get('date').value;
-  //   var date = Date.parse(selectedDate);
-
-  //   return true ? { invalidEndDate: true } : null;
-  // }
-
   weekendValidator(control: AbstractControl): ValidationErrors | null {
-    // debugger;
     var date: Date = new Date(control.value);
     var dayOfTheWeek = date.getDay();
     var error = false;
 
     if (dayOfTheWeek == 5 || dayOfTheWeek == 6) {
       error = true;
-      this.showTime = false;
     }
     return error ? { weekend: true } : null;
   }
 
+  pastDateValidator(control: AbstractControl): ValidationErrors | null {
+    var date: Date = new Date(control.value);
+    var now = new Date();
+    return now >= date ? { invalidPastDate: true } : null;
+  }
+
   onSubmitbookAppointmentForm() {
-    console.log(this.bookAppointmentForm.value);
+    this.isModalOpen = true;
+  }
 
-    // debugger;
-    // var date = new Date(this.date.value);
-
-    // var time = new Date();
-
-    // console.log(Date.parse(this.time.value[0]));
+  confirm() {
+    var time = moment(String(this.time.value)).format('YYYY-MM-DDTHH:mm');
+    this.barberService.setAppointment(time).subscribe(() => {
+      this.toastr.success('The appointment was scheduled successfully');
+    });
+    this.isModalOpen = false;
+    this.bookAppointmentForm.reset();
   }
 }

@@ -12,10 +12,14 @@ namespace API.Data
         {
 
         }
+        public DbSet<Appointment> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<AppUser>().HasMany(user => user.Appointments).WithOne(appointments => appointments.AppUser)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)

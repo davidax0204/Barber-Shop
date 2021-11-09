@@ -15,6 +15,7 @@ namespace API.Extensions
         public static IServiceCollection AddAplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
