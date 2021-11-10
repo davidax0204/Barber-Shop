@@ -10,6 +10,10 @@ namespace API.Interfaces
     {
         Appointment CreateAppointment(DateTime appointment, AppUser user);
         List<Appointment> GetAppointmentsByDay(DateTime day);
+        List<Appointment> GetAllAppointments();
+        Appointment GetAppointmentById(int id);
+        void DeleteAppointment(Appointment appointment);
+        void EditAppointment(Appointment appointment, DateTime newAppointment);
         bool AppointmentExist(DateTime appointment);
         // void Update(AppUser user);
         // Task<bool> SaveAllAsync();

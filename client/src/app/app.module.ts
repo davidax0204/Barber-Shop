@@ -14,6 +14,8 @@ import { ErrorInterceptor } from 'src/Interceptors/error.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { JwtInterceptor } from 'src/Interceptors/jwt.interceptor';
 import { BookComponent } from './book/book.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { EditAppointmentComponent } from './edit-appointment/edit-appointment.component';
 // import { DateFnsModule } from 'ngx-date-fns';
 
 @NgModule({
@@ -24,6 +26,8 @@ import { BookComponent } from './book/book.component';
     LoginComponent,
     ProfileComponent,
     BookComponent,
+    AppointmentsComponent,
+    EditAppointmentComponent,
   ],
   imports: [
     BrowserModule,

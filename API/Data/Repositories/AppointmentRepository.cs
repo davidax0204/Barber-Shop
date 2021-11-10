@@ -51,25 +51,27 @@ namespace API.Data.Repositories
             return Appointment;
         }
 
-        // public Task<IEnumerable> GetAppointmentsByDay(DateTime day)
-        // {
-        //     // var date = new DateTime(
-        //     //   day.Year,
-        //     //   day.Month,
-        //     //   day.Day
-        //     // );
+        public void DeleteAppointment(Appointment appointment)
+        {
+            _context.Appointments.Remove(appointment);
+        }
 
-        //     TimeSpan from = new TimeSpan(1, 00, 0);
-        //     TimeSpan to = new TimeSpan(23, 00, 0);
+        public void EditAppointment(Appointment appointment, DateTime newAppointment)
+        {
+            appointment.AppointmentnDate = newAppointment;
+        }
 
-        //     var dateFrom = day.Date + from;
-        //     var dateTo = day.Date + to;
+        public List<Appointment> GetAllAppointments()
+        {
+            var appointments = _context.Appointments.Include(x => x.AppUser).ToList();
 
+            return appointments;
+        }
 
-        //     var appointments = _context.Appointments.Where(a => a.AppointmentnDate == day).ToList();
-
-        //     return appointments;
-        // }
+        public Appointment GetAppointmentById(int id)
+        {
+            return _context.Appointments.Where(a => a.Id == id).FirstOrDefault();
+        }
 
         public List<Appointment> GetAppointmentsByDay(DateTime day)
         {

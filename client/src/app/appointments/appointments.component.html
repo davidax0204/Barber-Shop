@@ -1,0 +1,44 @@
+<div class="main-content">
+  <div class="main-content-inner-part-admin">
+
+    <h1 *ngIf="appointments?.length==0">You currently don't have any heroes</h1>
+
+    <div *ngFor="let appointment of appointments"
+         class="user-card-wrap">
+      <div class="user-card">
+
+
+        <div class="user-card-profile-level">
+          <label><b>Name: </b></label>
+          <div>{{appointment.appUser.userName | titlecase}}</div>
+        </div>
+
+        <div class="user-card-profile-level">
+          <label><b>Date: </b></label>
+          <div>{{appointment.appointmentnDate | date: 'dd/MM/yyyy'}}</div>
+        </div>
+
+        <div class="user-card-profile-level">
+          <label><b>Time: </b></label>
+          <div>{{appointment.appointmentnDate | date: 'HH:mm'}}</div>
+        </div>
+
+        <div class="user-card-profile-level">
+          <label><b>Scheduled at: </b></label>
+          <div>{{appointment.appointmentnDate | date: 'dd/MM/yyyy'}} {{appointment.appointmentCreationDate | date:
+            'HH:mm'}}</div>
+        </div>
+
+
+
+        <div class="user-card-buttons-actions">
+          <button *ngIf="mine(appointment.appUser.userName)"
+                  (click)="selectAppointment(appointment.id)">edit</button>
+          <button *ngIf="mine(appointment.appUser.userName)"
+                  (click)="delete(appointment.id)"
+                  class="registerbtn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

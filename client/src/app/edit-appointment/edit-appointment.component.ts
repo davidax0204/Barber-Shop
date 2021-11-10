@@ -6,23 +6,25 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { BarberService } from 'src/services/barber.service';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
+import { Appointment } from 'src/models/Appointment';
 import { TakenAppointment } from 'src/models/takenAppointment';
-import { skip } from 'rxjs/operators';
+import { BarberService } from 'src/services/barber.service';
 
 @Component({
-  selector: 'app-book',
-  templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css'],
+  selector: 'app-edit-appointment',
+  templateUrl: './edit-appointment.component.html',
+  styleUrls: ['./edit-appointment.component.css'],
 })
-export class BookComponent implements OnInit {
+export class EditAppointmentComponent implements OnInit {
   hours: any[] = [];
   bookAppointmentForm: FormGroup;
   date;
   time;
   takenTimes: TakenAppointment[];
+  activeAppointment: Appointment;
 
   showTime = false;
   isModalOpen = false;
@@ -31,7 +33,8 @@ export class BookComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private barberService: BarberService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router:Router
   ) {
     this.bookAppointmentForm = this.fb.group({
       date: [
@@ -95,7 +98,12 @@ export class BookComponent implements OnInit {
   addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes * 60000);
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.barberService.currentAppointment$.subscribe((appointment) => {
+      this.activeAppointment = appointment;
+      console.log(this.activeAppointment);
+    });
+  }
 
   invalidDateMessage() {
     if (this.date.errors?.required) {
@@ -142,11 +150,10 @@ export class BookComponent implements OnInit {
 
   confirm() {
     var time = moment(String(this.time.value)).format('YYYY-MM-DDTHH:mm');
-    this.barberService.setAppointment(time).subscribe(() => {
-      this.toastr.success('The appointment was scheduled successfully');
+
+    this.barberService.edit(this.activeAppointment.id, time).subscribe(() => {
+      this.toastr.success('You have succesfully edited your appointment');
+      this.router.navigateByUrl('/appointments');
     });
-    this.isModalOpen = false;
-    this.bookAppointmentForm.reset();
-    this.showTime = false;
   }
 }
