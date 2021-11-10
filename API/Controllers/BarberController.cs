@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Data;
@@ -23,6 +24,16 @@ namespace API.Controllers
             _userRepository = userRepository;
             _mapper = mapper;
             _appointmentRepository = appointmentRepository;
+        }
+
+        [HttpGet("{day}")]
+        public async Task<ActionResult> GetSelectedDayAppointments(DateTime day)
+        {
+            var Appointments = _appointmentRepository.GetAppointmentsByDay(day);
+
+            var AppointmentsDto = _mapper.Map<IList<Appointment>, IList<TakenDateDto>>(Appointments);
+
+            return Ok(AppointmentsDto);
         }
 
         [HttpPost("{appointment}")]

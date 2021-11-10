@@ -6,11 +6,11 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService } from 'src/services/account.service';
 import { BarberService } from 'src/services/barber.service';
 import * as moment from 'moment';
+import { TakenAppointment } from 'src/models/takenAppointment';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-book',
@@ -22,6 +22,7 @@ export class BookComponent implements OnInit {
   bookAppointmentForm: FormGroup;
   date;
   time;
+  takenTimes: TakenAppointment[];
 
   showTime = false;
   isModalOpen = false;
@@ -46,27 +47,49 @@ export class BookComponent implements OnInit {
 
   handler(e) {
     this.showTime = true;
-
-    var dateString = e.target.value;
-    let newDate = new Date(dateString);
-    let date = new Date(
-      newDate.getFullYear(),
-      newDate.getMonth(),
-      newDate.getUTCDate(),
-      9,
-      0
-    );
+    let selectedDate = new Date(e.target.value);
     this.hours = [];
+    this.getTakenAppointment(selectedDate, e);
+  }
 
-    this.hours.push(date);
+  async getTakenAppointment(selectedDate, e) {
+    var time = moment(selectedDate).format('YYYY-MM-DDTHH:mm');
 
-    for (let i = 0; i < 15; i++) {
-      date = this.addMinutes(date, 30);
-      this.hours.push(date);
-    }
+    this.barberService
+      .getSelectedDayAppointments(time)
+      .subscribe((takenTimes: TakenAppointment[]) => {
+        let selectedDate = new Date(e.target.value);
+        let date = new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getUTCDate(),
+          9,
+          0
+        );
 
-    /// get server date
-    // create hours
+        for (let i = 0; i < 15; i++) {
+          date = this.addMinutes(date, 30);
+          var flag = false;
+
+          takenTimes.forEach((appointmentnDate) => {
+            let item = moment(appointmentnDate.appointmentnDate).format(
+              'YYYY-MM-DDTHH:mm'
+            );
+            let dateformat = moment(date).format('YYYY-MM-DDTHH:mm');
+            if (item == dateformat) {
+              flag = true;
+            }
+          });
+
+          if (flag) {
+            continue;
+          }
+
+          this.hours.push(date);
+        }
+
+        this.takenTimes = takenTimes;
+      });
   }
 
   addMinutes(date, minutes) {

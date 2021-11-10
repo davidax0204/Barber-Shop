@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Controllers;
@@ -48,5 +50,42 @@ namespace API.Data.Repositories
 
             return Appointment;
         }
+
+        // public Task<IEnumerable> GetAppointmentsByDay(DateTime day)
+        // {
+        //     // var date = new DateTime(
+        //     //   day.Year,
+        //     //   day.Month,
+        //     //   day.Day
+        //     // );
+
+        //     TimeSpan from = new TimeSpan(1, 00, 0);
+        //     TimeSpan to = new TimeSpan(23, 00, 0);
+
+        //     var dateFrom = day.Date + from;
+        //     var dateTo = day.Date + to;
+
+
+        //     var appointments = _context.Appointments.Where(a => a.AppointmentnDate == day).ToList();
+
+        //     return appointments;
+        // }
+
+        public List<Appointment> GetAppointmentsByDay(DateTime day)
+        {
+            TimeSpan from = new TimeSpan(1, 00, 0);
+            TimeSpan to = new TimeSpan(23, 00, 0);
+
+            var dateFrom = day.Date + from;
+            var dateTo = day.Date + to;
+
+            var appointments = _context.Appointments
+                                .Where(a => a.AppointmentnDate > dateFrom &&
+                                            a.AppointmentnDate < dateTo)
+                                .ToList();
+
+            return appointments;
+        }
+
     }
 }
