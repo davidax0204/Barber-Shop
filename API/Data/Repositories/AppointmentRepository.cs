@@ -89,5 +89,18 @@ namespace API.Data.Repositories
             return appointments;
         }
 
+        public List<Appointment> GetSortedAppointments(string orderByName, DateTime fromDate, DateTime toDate)
+        {
+            var query = _context.Appointments.Include(x => x.AppUser).AsQueryable();
+
+            if (orderByName != "all")
+            {
+                query = query.Where(a => a.AppUser.UserName == orderByName);
+            }
+
+            query = query.Where(a => a.AppointmentnDate > fromDate && a.AppointmentnDate < toDate);
+
+            return query.ToList();
+        }
     }
 }

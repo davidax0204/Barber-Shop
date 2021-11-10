@@ -35,6 +35,14 @@ namespace API.Controllers
             return Ok(appointments);
         }
 
+        [HttpGet("params/{orderByName}/{fromDate}/{toDate}")]
+        public async Task<ActionResult> GetAppointmentsByParams(string orderByName, DateTime fromDate, DateTime toDate)
+        {
+            var appointments = _appointmentRepository.GetSortedAppointments(orderByName, fromDate, toDate);
+
+            return Ok(appointments);
+        }
+
 
         [HttpGet("edit/{id}")]
         public async Task<ActionResult> GetAppointment(int id)

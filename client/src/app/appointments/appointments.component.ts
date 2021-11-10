@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Appointment } from 'src/models/Appointment';
@@ -16,6 +17,9 @@ export class AppointmentsComponent implements OnInit {
   appointmentsSub: Subscription;
   appointments: Appointment[] = [];
   user: User = JSON.parse(localStorage.getItem('user'));
+  name;
+  dateTo;
+  dateFrom;
 
   constructor(
     private toastr: ToastrService,
@@ -63,5 +67,35 @@ export class AppointmentsComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  search() {
+    var fromDate;
+    var toDate;
+    var orderByName;
+
+    if (this.dateFrom) {
+      fromDate = moment(this.dateFrom).format('YYYY-MM-DDTHH:mm');
+    } else {
+      fromDate = moment('2000-01-01').format('YYYY-MM-DDTHH:mm');
+    }
+
+    if (this.dateTo) {
+      toDate = moment(this.dateTo).format('YYYY-MM-DDTHH:mm');
+    } else {
+      toDate = moment('2090-01-01').format('YYYY-MM-DDTHH:mm');
+    }
+
+    if (this.name) {
+      orderByName = this.name;
+    } else {
+      orderByName = 'all';
+    }
+
+    this.barberService
+      .getAppointmentsByName(orderByName, fromDate, toDate)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }

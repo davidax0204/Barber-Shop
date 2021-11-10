@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -37,6 +38,25 @@ export class BarberService {
     );
   }
 
+  getAppointmentsByName(orderByName: string, fromDate: Date, toDate: Date) {
+    return this.http
+      .get<Appointment[]>(
+        environment.apiUrl +
+          'barber/params/' +
+          orderByName +
+          '/' +
+          fromDate +
+          '/' +
+          toDate
+      )
+      .pipe(
+        map((appointments) => {
+          debugger;
+          this.appointments.next(appointments);
+        })
+      );
+  }
+
   delete(id: number) {
     return this.http
       .delete<Appointment[]>(environment.apiUrl + 'barber/' + id)
@@ -52,7 +72,6 @@ export class BarberService {
       .get<Appointment>(environment.apiUrl + 'barber/edit/' + id)
       .pipe(
         map((appointment) => {
-          debugger;
           this.currentAppointment.next(appointment);
         })
       );
@@ -71,4 +90,15 @@ export class BarberService {
         })
       );
   }
+
+  // private getPaginationHeaders(orderBy: string) {
+  //   let params = new HttpParams();
+
+  //   params = params.append('pageNumber', pageNumber.toString());
+  //   params = params.append('pageSize', pageSize.toString());
+
+  //   console.log(params);
+
+  //   return params;
+  // }
 }

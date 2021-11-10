@@ -15,6 +15,7 @@ namespace API.Interfaces
         void DeleteAppointment(Appointment appointment);
         void EditAppointment(Appointment appointment, DateTime newAppointment);
         bool AppointmentExist(DateTime appointment);
+        List<Appointment> GetSortedAppointments(string orderByName, DateTime fromDate, DateTime toDate);
         // void Update(AppUser user);
         // Task<bool> SaveAllAsync();
         // Task<AppUser> GetUserByIdAsync(string id);

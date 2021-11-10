@@ -1,5 +1,34 @@
 <div class="main-content">
+
+  <div class="search">
+    <div class="sign-up-line-wrap">
+      <label><b>Search by Name</b></label>
+      <input type="text"
+             placeholder="Seach by name"
+             [(ngModel)]="name">
+    </div>
+
+    <div class="sign-up-line-wrap">
+      <label><b>From Date</b></label>
+      <input type="date"
+             placeholder="Enter email"
+             [(ngModel)]="dateFrom">
+    </div>
+
+    <div class="sign-up-line-wrap">
+      <label><b>To Date</b></label>
+      <input type="date"
+             placeholder="Enter email"
+             [(ngModel)]="dateTo">
+    </div>
+
+    <button type="submit"
+            class="registerbtn"
+            (click)="search()">Search</button>
+  </div>
+
   <div class="main-content-inner-part-admin">
+
 
     <h1 *ngIf="appointments?.length==0">You currently don't have any heroes</h1>
 
